@@ -1,4 +1,4 @@
 package com.vibecoding.vibecoding.service;
 
-public class TaskService {
+public class TrelloService {
 }
