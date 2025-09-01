@@ -1,13 +1,11 @@
-package com.vibecoding.vibecoding;
+package com.taskmanager;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class VibecodingApplication {
-
+public class TaskManagerApplication {
     public static void main(String[] args) {
-        SpringApplication.run(VibecodingApplication.class, args);
+        SpringApplication.run(TaskManagerApplication.class, args);
     }
-
 }

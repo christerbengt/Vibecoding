@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Task - Task Manager</title>
+  <link th:href="@{/css/style.css}" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+          <h2 class="card-title mb-0">
+            <i class="fas fa-plus"></i> Skapa Ny Task
+          </h2>
+          <a href="/" class="btn btn-light btn-sm">
+            <i class="fas fa-home"></i> Hem
+          </a>
+        </div>
+        <div class="card-body">
+
+          <!-- Success/Error Messages -->
+          <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle"></i>
+            <span th:text="${successMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+          <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle"></i>
+            <span th:text="${errorMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+
+          <!-- Task Form -->
+          <form th:action="@{/create-task}" th:object="${task}" method="post" id="taskForm">
+
+            <!-- Title -->
+            <div class="mb-3">
+              <label for="title" class="form-label">
+                <i class="fas fa-heading"></i> Titel *
+              </label>
+              <input type="text" th:field="*{title}" class="form-control"
+                     th:class="${#fields.hasErrors('title')} ? 'form-control is-invalid' : 'form-control'"
+                     placeholder="Skriv in task titel"
+                     maxlength="100">
+              <div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
+                <span th:errors="*{title}"></span>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+              <label for="description" class="form-label">
+                <i class="fas fa-align-left"></i> Beskrivning
+              </label>
+              <textarea th:field="*{description}" class="form-control" rows="4"
+                        th:class="${#fields.hasErrors('description')} ? 'form-control is-invalid' : 'form-control'"
+                        placeholder="Beskriv tasken (valfritt)"
+                        maxlength="500"></textarea>
+              <div th:if="${#fields.hasErrors('description')}" class="invalid-feedback">
+                <span th:errors="*{description}"></span>
+              </div>
+              <div class="form-text">Max 500 tecken</div>
+            </div>
+
+            <!-- Priority -->
+            <div class="mb-3">
+              <label for="priority" class="form-label">
+                <i class="fas fa-flag"></i> Prioritet
+              </label>
+              <select th:field="*{priority}" class="form-select">
+                <option value="">Välj prioritet</option>
+                <option value="low">🟢 Låg</option>
+                <option value="medium">🟡 Medium</option>
+                <option value="high">🟠 Hög</option>
+                <option value="urgent">🔴 Urgent</option>
+              </select>
+              <div class="form-text">Prioritet visas i task titeln på Trello</div>
+            </div>
+
+            <!-- Assignee -->
+            <div class="mb-4">
+              <label for="assignee" class="form-label">
+                <i class="fas fa-user"></i> Tilldelad till
+              </label>
+              <input type="text" th:field="*{assignee}" class="form-control"
+                     placeholder="Namn på person (valfritt)">
+              <div class="form-text">Visas i task beskrivningen</div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+                <i class="fas fa-plus"></i> Skapa Task på Trello
+              </button>
+              <a href="/" class="btn btn-outline-secondary">
+                <i class="fas fa-times"></i> Avbryt
+              </a>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+      <!-- Info Card -->
+      <div class="card mt-4 border-info">
+        <div class="card-header bg-info text-white">
+          <h6 class="mb-0"><i class="fas fa-info-circle"></i> Tips</h6>
+        </div>
+        <div class="card-body">
+          <small>
+            • Prioritet läggs till i början av task titeln<br>
+            • Assignee information visas i task beskrivningen<br>
+            • Tasks skapas i den konfigurerade Trello listan
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Loading state för submit button
+  document.getElementById('taskForm').addEventListener('submit', function() {
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Skapar...';
+    submitBtn.disabled = true;
+  });
+
+  // Character counter för description
+  const descTextarea = document.querySelector('textarea[name="description"]');
+  if (descTextarea) {
+    const counter = document.createElement('small');
+    counter.className = 'text-muted float-end';
+    descTextarea.parentNode.appendChild(counter);
+
+    function updateCounter() {
+      const count = descTextarea.value.length;
+      counter.textContent = count + '/500';
+      counter.style.color = count > 450 ? '#dc3545' : '#6c757d';
+    }
+
+    descTextarea.addEventListener('input', updateCounter);
+    updateCounter();
+  }
+</script>
+</body>
+</html>
