@@ -1,7 +1,7 @@
-package com.taskmanager.service;
+package com.vibecoding.vibecoding.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.taskmanager.model.Task;
+import com.vibecoding.vibecoding.model.Task;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

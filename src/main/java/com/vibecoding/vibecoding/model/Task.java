@@ -1,4 +1,4 @@
-package com.taskmanager.model;
+package com.vibecoding.vibecoding.model;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

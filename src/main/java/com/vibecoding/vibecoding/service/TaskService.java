@@ -1,6 +1,6 @@
-package com.taskmanager.service;
+package com.vibecoding.vibecoding.service;
 
-import com.taskmanager.model.Task;
+import com.vibecoding.vibecoding.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;

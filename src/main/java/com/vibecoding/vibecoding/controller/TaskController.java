@@ -1,7 +1,7 @@
-package com.taskmanager.controller;
+package com.vibecoding.vibecoding.controller;
 
-import com.taskmanager.model.Task;
-import com.taskmanager.service.TaskService;
+import com.vibecoding.vibecoding.model.Task;
+import com.vibecoding.vibecoding.service.TaskService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
